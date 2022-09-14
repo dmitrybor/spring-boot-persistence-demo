@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "delivery")
@@ -23,6 +24,9 @@ public class Delivery {
     private String recipient;
     private LocalDate deliveryDate;
     private LocalTime deliveryTime;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "delivery")
+    private List<Plant> plants;
 
     @Type(type = "yes_no")
     private Boolean completed;
