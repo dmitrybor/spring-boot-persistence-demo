@@ -1,5 +1,7 @@
 package com.pydog.psdemo.data;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.pydog.psdemo.web.dto.View;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
@@ -13,9 +15,11 @@ public class Plant {
     @GeneratedValue
     private Long id;
 
+    @JsonView(View.PlantView.class)
     @Nationalized
     private String name;
 
+    @JsonView(View.PlantView.class)
     @Column(precision = 12, scale = 4)
     private BigDecimal price;
 
