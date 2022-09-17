@@ -25,7 +25,7 @@ public class Delivery {
     private LocalDate deliveryDate;
     private LocalTime deliveryTime;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "delivery")
+    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Plant> plants;
 
     @Type(type = "yes_no")
