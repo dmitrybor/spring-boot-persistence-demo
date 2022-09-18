@@ -3,7 +3,7 @@ package com.pydog.psdemo.web;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.pydog.psdemo.data.Plant;
 import com.pydog.psdemo.service.PlantService;
-import com.pydog.psdemo.web.dto.PlantResponse;
+import com.pydog.psdemo.web.dto.PlantDto;
 import com.pydog.psdemo.web.dto.View;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PlantController {
     }
 
     @GetMapping("/dto")
-    public PlantResponse getPlantDto(@RequestParam("name") @NotNull String name) {
+    public PlantDto getPlantDto(@RequestParam("name") @NotNull String name) {
         Plant plant = plantService.getPlantByName(name);
         return convertToPlantResponse(plant);
     }
@@ -37,9 +37,9 @@ public class PlantController {
         return plantService.getPlantByName(name);
     }
 
-    private PlantResponse convertToPlantResponse(final Plant plant) {
-        PlantResponse plantResponse = new PlantResponse();
-        BeanUtils.copyProperties(plant, plantResponse);
-        return plantResponse;
+    private PlantDto convertToPlantResponse(final Plant plant) {
+        PlantDto plantDto = new PlantDto();
+        BeanUtils.copyProperties(plant, plantDto);
+        return plantDto;
     }
 }

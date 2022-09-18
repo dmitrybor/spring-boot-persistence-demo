@@ -2,7 +2,7 @@ package com.pydog.psdemo.web.dto;
 
 import java.math.BigDecimal;
 
-public class PlantResponse {
+public class PlantDto {
     private String name;
     private BigDecimal price;
 

@@ -8,6 +8,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+@NamedQueries(
+        @NamedQuery(
+                name = "Delivery.findByRecipientName",
+                query = "SELECT d FROM Delivery d WHERE d.recipient = :recipientName"
+        )
+)
+
 @Entity
 @Table(name = "delivery")
 public class Delivery {
@@ -25,7 +32,7 @@ public class Delivery {
     private LocalDate deliveryDate;
     private LocalTime deliveryTime;
 
-    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Plant> plants;
 
     @Type(type = "yes_no")
@@ -69,6 +76,14 @@ public class Delivery {
 
     public void setDeliveryTime(LocalTime deliveryTime) {
         this.deliveryTime = deliveryTime;
+    }
+
+    public List<Plant> getPlants() {
+        return plants;
+    }
+
+    public void setPlants(List<Plant> plants) {
+        this.plants = plants;
     }
 
     public Boolean getCompleted() {
