@@ -8,13 +8,19 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@NamedQueries(
+@NamedQueries({
         @NamedQuery(
                 name = "Delivery.findByRecipientName",
                 query = "SELECT d FROM Delivery d WHERE d.recipient = :recipientName"
+        ),
+        @NamedQuery(
+                name = "Delivery.getRecipientAndPrice",
+                query = "SELECT new com.pydog.psdemo.data.RecipientAndPrice(p.delivery.recipient, sum(p.price)) " +
+                        "FROM Plant p " +
+                        "WHERE p.delivery.id = :deliveryId " +
+                        "GROUP BY p.delivery.id"
         )
-)
-
+})
 @Entity
 @Table(name = "delivery")
 public class Delivery {

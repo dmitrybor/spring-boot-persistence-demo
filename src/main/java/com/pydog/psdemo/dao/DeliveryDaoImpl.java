@@ -1,6 +1,7 @@
 package com.pydog.psdemo.dao;
 
 import com.pydog.psdemo.data.Delivery;
+import com.pydog.psdemo.data.RecipientAndPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,13 @@ public class DeliveryDaoImpl implements DeliveryDao {
         TypedQuery<Delivery> query = entityManager.createNamedQuery("Delivery.findByRecipientName", Delivery.class);
         query.setParameter("recipientName", name);
         return query.getResultList();
+    }
+
+    @Override
+    public RecipientAndPrice getRecipientAndPriceForDelivery(Long deliveryId) {
+        TypedQuery<RecipientAndPrice> query = entityManager.createNamedQuery("Delivery.getRecipientAndPrice", RecipientAndPrice.class);
+        query.setParameter("deliveryId", deliveryId);
+        return query.getSingleResult();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.pydog.psdemo.service;
 
 import com.pydog.psdemo.dao.DeliveryDao;
 import com.pydog.psdemo.data.Delivery;
+import com.pydog.psdemo.data.RecipientAndPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +26,9 @@ public class DeliveryService {
 
     public List<Delivery> findByRecipientName(final String recipientName) {
         return deliveryDao.findByRecipient(recipientName);
+    }
+
+    public RecipientAndPrice getRecipientAndPriceForDelivery(Long deliveryId) {
+        return deliveryDao.getRecipientAndPriceForDelivery(deliveryId);
     }
 }

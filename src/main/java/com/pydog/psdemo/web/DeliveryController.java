@@ -2,6 +2,7 @@ package com.pydog.psdemo.web;
 
 import com.pydog.psdemo.data.Delivery;
 import com.pydog.psdemo.data.Plant;
+import com.pydog.psdemo.data.RecipientAndPrice;
 import com.pydog.psdemo.service.DeliveryService;
 import com.pydog.psdemo.web.dto.DeliveryDto;
 import com.pydog.psdemo.web.dto.PlantDto;
@@ -30,6 +31,11 @@ public class DeliveryController {
     public List<DeliveryDto> findByRecipientName(@RequestParam("recipient") final String recipient) {
         List<Delivery> deliveries = deliveryService.findByRecipientName(recipient);
         return deliveries.stream().map(this::convert).collect(Collectors.toList());
+    }
+
+    @GetMapping("/recipientAndPrice")
+    public RecipientAndPrice getRecipientAndPriceForDelivery(@RequestParam("deliveryId") Long deliveryId) {
+        return deliveryService.getRecipientAndPriceForDelivery(deliveryId);
     }
 
     private Delivery convert(DeliveryDto deliveryDto) {
