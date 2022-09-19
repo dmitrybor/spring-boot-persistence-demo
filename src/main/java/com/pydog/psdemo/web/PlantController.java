@@ -7,11 +7,13 @@ import com.pydog.psdemo.web.dto.PlantDto;
 import com.pydog.psdemo.web.dto.View;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 @RestController
@@ -35,6 +37,12 @@ public class PlantController {
     @JsonView(View.PlantView.class)
     public Plant getPlantView(@RequestParam("name") @NotNull String name) {
         return plantService.getPlantByName(name);
+    }
+
+    @GetMapping("/delivered")
+    public Boolean isPlantDelivered(@RequestParam("plantId") Long plantId, final HttpServletResponse response) {
+        response.addHeader(HttpHeaders.CACHE_CONTROL, "no-store");
+        return plantService.isPlantDelivered(plantId);
     }
 
     private PlantDto convertToPlantResponse(final Plant plant) {

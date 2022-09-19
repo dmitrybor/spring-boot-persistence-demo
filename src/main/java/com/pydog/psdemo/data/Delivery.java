@@ -42,7 +42,7 @@ public class Delivery {
     private List<Plant> plants;
 
     @Type(type = "yes_no")
-    private Boolean completed;
+    private Boolean completed = false;
 
     public Long getId() {
         return id;

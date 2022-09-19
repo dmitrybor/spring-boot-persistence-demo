@@ -3,14 +3,14 @@ package com.pydog.psdemo.dao;
 import com.pydog.psdemo.data.Delivery;
 import com.pydog.psdemo.data.RecipientAndPrice;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Component
+@Repository
 @Transactional
 public class DeliveryDaoImpl implements DeliveryDao {
     private final EntityManager entityManager;
