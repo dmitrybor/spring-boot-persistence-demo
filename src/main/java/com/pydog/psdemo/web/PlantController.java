@@ -8,13 +8,15 @@ import com.pydog.psdemo.web.dto.View;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/plant")
@@ -45,9 +47,27 @@ public class PlantController {
         return plantService.isPlantDelivered(plantId);
     }
 
-    private PlantDto convertToPlantResponse(final Plant plant) {
+    @GetMapping
+    public List<PlantDto> getPlants(@RequestParam(value = "maxPrice", defaultValue = "0") BigDecimal maxPrice) {
+        List<Plant> plants = plantService.findCheaperThan(maxPrice);
+        return plants.stream().map(this::convertToPlantResponse).collect(Collectors.toList());
+    }
+
+    @PostMapping
+    public Long addPlant(@Valid @RequestBody PlantDto plantDto) {
+        Plant plant = convertToPlantEntity(plantDto);
+        return plantService.save(plant);
+    }
+
+    private PlantDto convertToPlantResponse(@NonNull final Plant plant) {
         PlantDto plantDto = new PlantDto();
         BeanUtils.copyProperties(plant, plantDto);
         return plantDto;
+    }
+
+    private Plant convertToPlantEntity(@NonNull final PlantDto plantDto) {
+        Plant plant = new Plant();
+        BeanUtils.copyProperties(plantDto, plant);
+        return plant;
     }
 }

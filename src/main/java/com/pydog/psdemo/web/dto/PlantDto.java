@@ -1,9 +1,12 @@
 package com.pydog.psdemo.web.dto;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class PlantDto {
+    @NotNull
     private String name;
+    @NotNull
     private BigDecimal price;
 
     public String getName() {
